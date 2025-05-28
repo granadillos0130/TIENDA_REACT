@@ -23,6 +23,17 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      // Personalizar reglas para el proyecto
+      '@typescript-eslint/no-explicit-any': 'warn', // Cambiar a warning en lugar de error
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'prefer-spread': 'warn', // Cambiar a warning
     },
   },
 )

@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { Header } from './components/common/Header';
+import { Footer } from './components/common/Footer';
+import { Home } from './pages/Home';
+import { Categories } from './pages/Categories';
+import { Products } from './pages/Products';
+import { Users } from './pages/Users';
+import { Cart } from './pages/Cart';
+
+// Importar estilos CSS
+import './styles/global.css';
+import './styles/components.css';
+import './styles/pages.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState('home');
+
+  const handleSectionChange = (section: string) => {
+    setActiveSection(section);
+  };
+
+  const renderCurrentSection = () => {
+    switch (activeSection) {
+      case 'home':
+        return <Home onNavigate={handleSectionChange} />;
+      case 'categories':
+        return <Categories />;
+      case 'products':
+        return <Products />;
+      case 'users':
+        return <Users />;
+      case 'cart':
+        return <Cart />;
+      default:
+        return <Home onNavigate={handleSectionChange} />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <Header 
+        activeSection={activeSection} 
+        onSectionChange={handleSectionChange} 
+      />
+      
+      <main className="main-content">
+        {renderCurrentSection()}
+      </main>
+      
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
